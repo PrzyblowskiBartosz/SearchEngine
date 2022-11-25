@@ -1,4 +1,4 @@
-package com.findwise;
+package com.findwise.model;
 
 public interface IndexEntry {
     String getId();
