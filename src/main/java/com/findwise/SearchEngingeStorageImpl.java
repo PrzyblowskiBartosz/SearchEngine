@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
-public class SearchEngingeStorageImpl implements SearchEngineStorage, Clerable {
+public class SearchEngingeStorageImpl implements SearchEngineStorage {
 
     Map<String, IndexEntry> storage = new HashMap<>();
     private List<IndexEntry> indexEntries;
@@ -15,7 +15,7 @@ public class SearchEngingeStorageImpl implements SearchEngineStorage, Clerable {
     Map<String, String> documentStorage = new HashMap<>();
 
     @Override
-    public void clear() {
+    public void clearContext() {
         documentStorage.clear();
     }
 

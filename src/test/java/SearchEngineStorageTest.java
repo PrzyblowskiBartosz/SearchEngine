@@ -12,7 +12,7 @@ public class SearchEngineStorageTest {
 
     @After
     public void clearStorage() {
-        storage.clear();
+        storage.clearContext();
     }
 
     @Test
