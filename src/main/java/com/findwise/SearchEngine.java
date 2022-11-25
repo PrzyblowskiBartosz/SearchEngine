@@ -1,5 +1,7 @@
 package com.findwise;
 
+import com.findwise.model.IndexEntry;
+
 import java.util.List;
 
 public interface SearchEngine {
