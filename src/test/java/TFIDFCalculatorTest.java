@@ -1,5 +1,5 @@
-import com.findwise.SearchEngineStorage;
-import com.findwise.SearchEngingeStorageImpl;
+import com.findwise.storage.DocumentStorage;
+import com.findwise.storage.DocumentStorageImpl;
 import com.findwise.TFIDFCalculator;
 import com.findwise.TFIDFCalculatorImpl;
 import org.junit.After;
@@ -13,7 +13,7 @@ import java.util.Map;
 public class TFIDFCalculatorTest {
 
     TFIDFCalculator calculator = TFIDFCalculatorImpl.getInstance();
-    SearchEngineStorage storage = SearchEngingeStorageImpl.getInstance();
+    DocumentStorage storage = DocumentStorageImpl.getInstance();
 
     @After
     public void clearStorage() {

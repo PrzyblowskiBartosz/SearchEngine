@@ -1,5 +1,5 @@
-import com.findwise.SearchEngineStorage;
-import com.findwise.SearchEngingeStorageImpl;
+import com.findwise.storage.DocumentStorage;
+import com.findwise.storage.DocumentStorageImpl;
 import com.findwise.Tokenizer;
 import com.findwise.TokenizerImpl;
 import org.junit.After;
@@ -10,7 +10,7 @@ import java.util.*;
 
 public class SearchEngineStorageTest {
 
-    SearchEngineStorage storage = SearchEngingeStorageImpl.getInstance();
+    DocumentStorage storage = DocumentStorageImpl.getInstance();
     Tokenizer tokenizer = TokenizerImpl.getInstance();
 
     @After

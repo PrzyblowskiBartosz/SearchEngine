@@ -2,12 +2,17 @@ package com.findwise;
 
 import com.findwise.model.IndexEntry;
 import com.findwise.model.IndexEntryImpl;
+import com.findwise.storage.IndexEntryStorage;
+import com.findwise.storage.IndexEntryStorageImpl;
+import com.findwise.storage.DocumentStorage;
+import com.findwise.storage.DocumentStorageImpl;
 
 import java.util.*;
 
 public class SearchEngineImpl implements SearchEngine {
 
-    private final SearchEngineStorage storage;
+    private final DocumentStorage documentStorage;
+    private final IndexEntryStorage indexEntryStorage;
     private final TFIDFCalculator tfidfCalculator;
     private final Tokenizer tokenizer;
 
@@ -16,7 +21,8 @@ public class SearchEngineImpl implements SearchEngine {
     }
 
     private SearchEngineImpl() {
-        this.storage = SearchEngingeStorageImpl.getInstance();
+        this.documentStorage = DocumentStorageImpl.getInstance();
+        this.indexEntryStorage = IndexEntryStorageImpl.getInstance();
         this.tokenizer = TokenizerImpl.getInstance();
         this.tfidfCalculator = TFIDFCalculatorImpl.getInstance();
     }
@@ -35,7 +41,7 @@ public class SearchEngineImpl implements SearchEngine {
         List<String> tokens = tokenizer.getTokens(content);
 
         for (String token : tokens) {
-            Optional<IndexEntry> indexEntry = storage.getIndexEntryById(documentId, token);
+            Optional<IndexEntry> indexEntry = indexEntryStorage.getIndexEntryById(documentId, token);
             if (indexEntry.isPresent()) {
                 updateIndexEntry(documentId, token, indexEntry.get());
             } else {
@@ -48,14 +54,14 @@ public class SearchEngineImpl implements SearchEngine {
     private void updateIndexEntry(String documentId, String token, IndexEntry indexEntry) {
         double newScore = tfidfCalculator.getScore(token, documentId);
         indexEntry.setScore(newScore);
-        storage.updateIndexEntry(documentId, indexEntry);
+        indexEntryStorage.updateIndexEntry(documentId, indexEntry);
     }
 
     //todo
     private void createNewIndexEntry(String documentId, String token) {
         double scores = tfidfCalculator.getScore(token, documentId);
         List<IndexEntry> indexEntry = Collections.singletonList(new IndexEntryImpl(documentId, scores));
-        storage.addIndexEntries(documentId, indexEntry);
+        indexEntryStorage.addIndexEntries(documentId, indexEntry);
     }
 
     //todo

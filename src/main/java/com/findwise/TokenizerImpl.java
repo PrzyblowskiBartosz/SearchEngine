@@ -7,7 +7,7 @@ import java.util.StringTokenizer;
 public class TokenizerImpl implements Tokenizer {
 
 
-    private static class Singleton {
+   private static class Singleton {
         private static final Tokenizer INSTANCE = new TokenizerImpl();
     }
 

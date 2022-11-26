@@ -1,14 +1,13 @@
 import com.findwise.SearchEngine;
 import com.findwise.SearchEngineImpl;
-import com.findwise.SearchEngineStorage;
-import com.findwise.SearchEngingeStorageImpl;
+import com.findwise.storage.DocumentStorage;
+import com.findwise.storage.DocumentStorageImpl;
 
 public class Main {
     public static void main(String[] args) {
         System.out.println("Hello world!");
 
-        SearchEngineStorage storage = SearchEngingeStorageImpl.getInstance();
-        // storage.addDocumentsList
+        DocumentStorage storage = DocumentStorageImpl.getInstance();
 
         SearchEngine searchEngine = SearchEngineImpl.getInstance();
 
