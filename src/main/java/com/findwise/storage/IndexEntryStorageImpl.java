@@ -2,10 +2,8 @@ package com.findwise.storage;
 
 import com.findwise.model.IndexEntry;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 public class IndexEntryStorageImpl implements IndexEntryStorage{
     private final Map<String, List<IndexEntry>> documentIndexEntries = new HashMap<>();
@@ -38,6 +36,17 @@ public class IndexEntryStorageImpl implements IndexEntryStorage{
     public void updateIndexEntry(String documentId, IndexEntry updatedIndexEntry) {
         Optional<IndexEntry> elemenToUpdate = getIndexEntryById(documentId, updatedIndexEntry.getId());
         elemenToUpdate.ifPresent(indexEntry -> indexEntry.setScore(updatedIndexEntry.getScore()));
+    }
+
+    @Override
+    public Map<String, List<IndexEntry>> getDocumentsWithToken(String token) {
+        return documentIndexEntries.entrySet().stream().filter(entry -> {
+            for (IndexEntry indexEntry : entry.getValue()) {
+                if (indexEntry.getId().equals(token))
+                    return true;
+            }
+            return false;
+        }).collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
     }
 
     @Override
