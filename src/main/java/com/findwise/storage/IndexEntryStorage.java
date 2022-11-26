@@ -1,11 +1,12 @@
 package com.findwise.storage;
 
+import com.findwise.Testable;
 import com.findwise.model.IndexEntry;
 
 import java.util.List;
 import java.util.Optional;
 
-public interface IndexEntryStorage {
+public interface IndexEntryStorage extends Testable {
     void addIndexEntries(String documentId, List<IndexEntry> indexEntry);
 
     Optional<IndexEntry> getIndexEntryById(String documentId, String token);

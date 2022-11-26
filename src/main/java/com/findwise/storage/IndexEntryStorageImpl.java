@@ -28,7 +28,7 @@ public class IndexEntryStorageImpl implements IndexEntryStorage{
     @Override
     public Optional<IndexEntry> getIndexEntryById(String documentId, String token) {
         List<IndexEntry> indexEntries = documentIndexEntries.get(documentId);
-        if (indexEntries.isEmpty())
+        if (indexEntries == null || indexEntries.isEmpty())
             return Optional.empty();
 
         return indexEntries.stream().filter(indexEntry -> indexEntry.getId().equals(token)).findFirst();
@@ -40,4 +40,8 @@ public class IndexEntryStorageImpl implements IndexEntryStorage{
         elemenToUpdate.ifPresent(indexEntry -> indexEntry.setScore(updatedIndexEntry.getScore()));
     }
 
+    @Override
+    public void clearContext() {
+        documentIndexEntries.clear();
+    }
 }
