@@ -27,4 +27,13 @@ public class TokenizerTest {
 
         Assert.assertTrue("Should return empty list", result.isEmpty());
     }
+
+    @Test
+    public void Should_Transform_Every_Upper_Case_To_Lower_Case_In_Token() {
+        String content = "Word!";
+
+        List<String> result = tokenizer.getTokens(content);
+
+        Assert.assertEquals("Every letter should be lower case", "word!", result.get(0));
+    }
 }

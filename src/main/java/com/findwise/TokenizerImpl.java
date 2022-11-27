@@ -22,9 +22,11 @@ public class TokenizerImpl implements Tokenizer {
     public List<String> getTokens(String content){
         StringTokenizer tokenizer = new StringTokenizer(content);
         List<String> tokens = new ArrayList<>();
+
         while (tokenizer.hasMoreTokens()) {
-            tokens.add(tokenizer.nextToken());
+            tokens.add(tokenizer.nextToken().toLowerCase());
         }
+
         return tokens;
     }
 }
