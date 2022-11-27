@@ -1,5 +1,5 @@
-import com.findwise.model.IndexEntry;
-import com.findwise.model.IndexEntryImpl;
+import com.findwise.IndexEntry;
+import com.findwise.IndexEntryImpl;
 import com.findwise.storage.IndexEntryStorage;
 import com.findwise.storage.IndexEntryStorageImpl;
 import org.junit.After;
@@ -7,7 +7,6 @@ import org.junit.Assert;
 import org.junit.Test;
 
 import java.util.*;
-import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class IndexEntryStorageTest {

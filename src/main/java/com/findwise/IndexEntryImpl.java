@@ -1,4 +1,4 @@
-package com.findwise.model;
+package com.findwise;
 
 public class IndexEntryImpl implements IndexEntry {
 

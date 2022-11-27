@@ -1,6 +1,6 @@
 package com.findwise.storage;
 
-import com.findwise.model.IndexEntry;
+import com.findwise.IndexEntry;
 
 import java.util.*;
 import java.util.stream.Collectors;

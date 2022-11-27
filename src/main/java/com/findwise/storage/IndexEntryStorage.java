@@ -1,7 +1,7 @@
 package com.findwise.storage;
 
 import com.findwise.Testable;
-import com.findwise.model.IndexEntry;
+import com.findwise.IndexEntry;
 
 import java.util.List;
 import java.util.Map;

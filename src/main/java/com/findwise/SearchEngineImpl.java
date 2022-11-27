@@ -1,17 +1,14 @@
 package com.findwise;
 
-import com.findwise.model.IndexEntry;
-import com.findwise.model.IndexEntryImpl;
 import com.findwise.storage.IndexEntryStorage;
 import com.findwise.storage.IndexEntryStorageImpl;
-import com.findwise.storage.DocumentStorage;
-import com.findwise.storage.DocumentStorageImpl;
 
-import java.util.*;
+import java.util.Collections;
+import java.util.List;
+import java.util.Optional;
 
 public class SearchEngineImpl implements SearchEngine {
 
-    private final DocumentStorage documentStorage;
     private final IndexEntryStorage indexEntryStorage;
     private final TFIDFCalculator tfidfCalculator;
     private final Tokenizer tokenizer;
@@ -21,7 +18,6 @@ public class SearchEngineImpl implements SearchEngine {
     }
 
     private SearchEngineImpl() {
-        this.documentStorage = DocumentStorageImpl.getInstance();
         this.indexEntryStorage = IndexEntryStorageImpl.getInstance();
         this.tokenizer = TokenizerImpl.getInstance();
         this.tfidfCalculator = TFIDFCalculatorImpl.getInstance();
@@ -67,7 +63,7 @@ public class SearchEngineImpl implements SearchEngine {
     //todo
     @Override
     public List<IndexEntry> search(String term) {
-
+        indexEntryStorage.getDocumentsWithToken(term);
 
         return null;
     }
