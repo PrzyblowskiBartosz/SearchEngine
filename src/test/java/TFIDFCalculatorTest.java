@@ -23,12 +23,12 @@ public class TFIDFCalculatorTest {
     @Test
     public void should_return_term_frequency() {
         prepareStorage2();
-        Map<String, List<String>> documents = storage.getDocumentsWithToken("Hyundai");
+        Map<String, List<String>> documents = storage.getDocumentsWithToken("honda");
         List<String> documentTokens = documents.get("D3");
 
-        float result = calculator.calculateTermFrequency("Hyundai", documentTokens);
+        float result = calculator.calculateTermFrequency("honda", documentTokens);
 
-        Assert.assertEquals("Frequency of 'brown' token should be equal 0.125 ", 0.125 , result, 0.0);
+        Assert.assertEquals("Frequency of 'honda' token should be equal 1/4 ", (double) 1/4 , result, 0.0);
     }
 
     @Test
@@ -37,7 +37,7 @@ public class TFIDFCalculatorTest {
 
         double result = calculator.calculateInverseDocumentFrequency("model");
 
-        Assert.assertEquals("Inverse document frequency should be equal 1.386", 1.386, result, 0.001);
+        Assert.assertEquals("Inverse document frequency should be equal 0.602", 0.602, result, 0.001);
     }
 
     @Test
@@ -51,10 +51,10 @@ public class TFIDFCalculatorTest {
 
     private void prepareStorage2() {
         Map<String, String> documents = new HashMap<>();
-        documents.put("D1", "My name is Naftal");
-        documents.put("D2", "My car is Hyundai");
-        documents.put("D3", "The car I drive is a Hyundai Sonata");
-        documents.put("D4", "My car is a Sonata model by Hyundai !!");
+        documents.put("D1", "name bartosz");
+        documents.put("D2", "car honda");
+        documents.put("D3", "car drive honda civic");
+        documents.put("D4", "car civic model honda !!");
 
         for (Map.Entry<String, String> document : documents.entrySet()) {
             storage.addDocument(document.getKey(), document.getValue());

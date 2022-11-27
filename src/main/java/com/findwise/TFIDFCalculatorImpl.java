@@ -33,11 +33,11 @@ public class TFIDFCalculatorImpl implements TFIDFCalculator {
 
     @Override
     public double calculateInverseDocumentFrequency(String word) {
-        int documentCountWithWord = storage.getDocumentIdsWithToken(word).size();
         int getDocumentStoreStorage = storage.getDocumentStoreSize();
+        int documentCountWithWord = storage.getDocumentIdsWithToken(word).size();
         double log = ((double) getDocumentStoreStorage) / ((double) documentCountWithWord);
 
-        return Math.log(log);
+        return Math.log10(log);
     }
 
     @Override
