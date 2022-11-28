@@ -94,7 +94,7 @@ public class SearchEngineImpl implements SearchEngine {
         Optional<Set<IndexEntry>> results = indexEntryStorage.getIndexEntriesByToken(term);
         return results
                 .map(indexEntries -> indexEntries.stream()
-                        .sorted(Comparator.comparing(IndexEntry::getScore))
+                        .sorted(Comparator.comparing(IndexEntry::getScore).reversed())
                         .collect(Collectors.toList()))
                 .orElse(Collections.emptyList());
     }
