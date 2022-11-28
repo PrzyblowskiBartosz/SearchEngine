@@ -11,11 +11,11 @@ public interface DocumentStorage extends Testable {
 
     void addDocument(String documentId, String content);
 
-    Optional<List<String>> getDocumentById(String documentId);
+    Optional<List<String>> getDocumentContentById(String documentId);
 
-    Set<String> getDocumentIdsWithToken(String token);
+    Set<String> getDocumentIdsWithTokens(Set<String> token);
 
-    Map<String, List<String>> getDocumentsWithToken(String token);
+    Map<String, List<String>> getDocumentsWithTokens(Set<String> token);
 
     int getDocumentStoreSize();
 }

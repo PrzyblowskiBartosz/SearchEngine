@@ -18,77 +18,49 @@ public class IndexEntryStorageTest {
         storage.clearContext();
     }
 
-    @Test
-    public void Should_Insert_Index_Entry_Element() {
-        IndexEntry indexEntry = new IndexEntryImpl("word", 1.1);
-
-        storage.addIndexEntries("Document1", Collections.singletonList(indexEntry));
-        Optional<IndexEntry> result = storage.getIndexEntryById("Document1", "word");
-
-        Assert.assertTrue("Should not be empty", result.isPresent());
-        Assert.assertEquals("Should be equals", indexEntry, result.get());
-    }
-
-    @Test
-    public void Should_Update_Index_Entry_Scores_Element() {
-        IndexEntry indexEntry = new IndexEntryImpl("word", 1.1);
-        IndexEntry indexEntry2 = new IndexEntryImpl("record", 1.2);
-        storage.addIndexEntries("Document1", Arrays.asList(indexEntry, indexEntry2));
-
-        indexEntry2 = new IndexEntryImpl("record", 2.2);
-        storage.updateIndexEntry("Document1", indexEntry2);
-        Optional<IndexEntry> result = storage.getIndexEntryById("Document1", "record");
-
-        Assert.assertTrue("Should not be empty", result.isPresent());
-        Assert.assertEquals("Should be equals", 2.2, result.get().getScore(), 0.0);
-    }
-
-    @Test
-    public void Should_Return_Empty_Optional() {
-        Optional<IndexEntry> result = storage.getIndexEntryById("Document1", "record");
-
-        Assert.assertTrue("Should not be empty", result.isEmpty());
-    }
-
-    @Test
-    public void Should_Return_Map_With_Documentc_Containing_Looked_For_Token() {
+   @Test
+    public void Should_Create_Index_Entry_Index() {
         prepareStorage();
 
-        Map<String, List<IndexEntry>> results = storage.getDocumentsWithToken("fox");
+        Optional<Set<IndexEntry>> result = storage.getIndexEntriesByToken("brown");
 
-       Assert.assertEquals("Returned map should contain 3 elements", 3, results.size());
+        Assert.assertTrue("Results should not be empty", result.isPresent());
+        Assert.assertEquals("Results should contains 3 indexes", 3, result.get().size());
+
+        IndexEntry indexEntry = result.get().iterator().next();
+        Assert.assertTrue("Result should have id and score", indexEntry.getId()!= null && indexEntry.getScore() != 0.0);
     }
 
     @Test
-    public void Should_Return_Empty_Map_When_Look_For_Uknown_Word() {
-        prepareStorage();
+    public void Should_Update_Index_Entry_Scores() {
+        storage.addEditIndexEntry("fox", "doc1", 0.5);
+        storage.addEditIndexEntry("fox", "doc1", 1.0);
 
-        Map<String, List<IndexEntry>> results = storage.getDocumentsWithToken("uknown");
+        Optional<Set<IndexEntry>> result = storage.getIndexEntriesByToken("fox");
 
-        Assert.assertTrue("Returned map should be empty", results.isEmpty());
+        Assert.assertTrue("Result should not be empty", result.isPresent());
+        Assert.assertEquals("Result should have size = 1", 1, result.get().size());
+        Assert.assertEquals("Result should have score = 1.0", 1.0, result.get().iterator().next().getScore(), 0.0);
     }
 
     private void prepareStorage() {
-         //doc1
-        List<IndexEntry> doc1Tokens = Stream.of(
-                (IndexEntry) new IndexEntryImpl("brown", 1.0),
-                new IndexEntryImpl("fox", 1.2),
-                new IndexEntryImpl("jumped", 1.3)      ).toList();
+        List<IndexEntry> brown = Stream.of(
+                (IndexEntry) new IndexEntryImpl("doc1", 1.0),
+                new IndexEntryImpl("doc3", 1.2),
+                new IndexEntryImpl("doc4", 1.3)).toList();
 
-        //doc2
-        List<IndexEntry> doc2Tokens = Stream.of(
-                (IndexEntry) new IndexEntryImpl("brown", 1.4),
-                new IndexEntryImpl("fox", 1.5),
-                new IndexEntryImpl("jumped", 1.6)).toList();
+        List<IndexEntry> fox = Stream.of(
+                (IndexEntry) new IndexEntryImpl("doc2", 1.4),
+                new IndexEntryImpl("doc4", 1.5),
+                new IndexEntryImpl("doc1", 1.6)).toList();
 
-        //doc3
-        List<IndexEntry> doc3Tokens = Stream.of(
-                (IndexEntry) new IndexEntryImpl("red", 1.4),
-                new IndexEntryImpl("fox", 1.7),
-                new IndexEntryImpl("bit", 1.8)).toList();
+        List<IndexEntry> red = Stream.of(
+                (IndexEntry) new IndexEntryImpl("doc1", 1.4),
+                new IndexEntryImpl("doc2", 1.7),
+                new IndexEntryImpl("doc3", 1.8)).toList();
 
-        storage.addIndexEntries("Document1", doc1Tokens);
-        storage.addIndexEntries("Document2", doc2Tokens);
-        storage.addIndexEntries("Document3", doc3Tokens);
+        brown.forEach(index -> storage.addEditIndexEntry("brown", index.getId(), index.getScore()));
+        fox.forEach(index -> storage.addEditIndexEntry("fox", index.getId(), index.getScore()));
+        red.forEach(index -> storage.addEditIndexEntry("red", index.getId(), index.getScore()));
     }
 }

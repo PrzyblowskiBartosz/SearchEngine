@@ -6,6 +6,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +24,7 @@ public class TFIDFCalculatorTest {
     @Test
     public void should_return_term_frequency() {
         prepareStorage2();
-        Map<String, List<String>> documents = storage.getDocumentsWithToken("honda");
+        Map<String, List<String>> documents = storage.getDocumentsWithTokens(Collections.singleton("honda"));
         List<String> documentTokens = documents.get("D3");
 
         float result = calculator.calculateTermFrequency("honda", documentTokens);

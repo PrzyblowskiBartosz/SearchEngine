@@ -33,17 +33,17 @@ public class DocumentStorageImpl implements DocumentStorage {
     }
 
     @Override
-    public Optional<List<String>> getDocumentById(String documentId) {
+    public Optional<List<String>> getDocumentContentById(String documentId) {
         List<String> content = documentStorage.get(documentId);
         return content != null ? Optional.of(content) : Optional.empty();
     }
 
     @Override
-    public Set<String> getDocumentIdsWithToken(String token) {
+    public Set<String> getDocumentIdsWithTokens(Set<String> tokens) {
         Set<String> documentIds = new HashSet<>();
         for(Map.Entry<String, List<String>> document : documentStorage.entrySet()) {
             for (String documentToken : document.getValue()) {
-                if (token.equals(documentToken)) {
+                if (tokens.contains(documentToken)) {
                     documentIds.add(document.getKey());
                 }
             }
@@ -53,11 +53,11 @@ public class DocumentStorageImpl implements DocumentStorage {
     }
 
     @Override
-    public Map<String, List<String>> getDocumentsWithToken(String token) {
+    public Map<String, List<String>> getDocumentsWithTokens(Set<String> tokens) {
         Map<String, List<String>> documentsWithToken = new HashMap<>();
         for (Map.Entry<String, List<String>> document : documentStorage.entrySet()) {
             for (String documentToken : document.getValue()) {
-                if (documentToken.equals(token)) {
+                if (tokens.contains(documentToken)) {
                     documentsWithToken.put(document.getKey(), document.getValue());
                     break;
                 }

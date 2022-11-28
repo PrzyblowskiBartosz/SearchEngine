@@ -32,9 +32,9 @@ public class TFIDFCalculatorImpl implements TFIDFCalculator {
     }
 
     @Override
-    public double calculateInverseDocumentFrequency(String word) {
+    public double calculateInverseDocumentFrequency(String term) {
         int getDocumentStoreStorage = storage.getDocumentStoreSize();
-        int documentCountWithWord = storage.getDocumentIdsWithToken(word).size();
+        int documentCountWithWord = storage.getDocumentIdsWithTokens(Collections.singleton(term)).size();
         double log = ((double) getDocumentStoreStorage) / ((double) documentCountWithWord);
 
         return Math.log10(log);
@@ -42,7 +42,7 @@ public class TFIDFCalculatorImpl implements TFIDFCalculator {
 
     @Override
     public double getScore(String word, String documentId) {
-        List<String> documentTokens = storage.getDocumentById(documentId).orElse(Collections.emptyList());
+        List<String> documentTokens = storage.getDocumentContentById(documentId).orElse(Collections.emptyList());
 
         double termFrequency = calculateTermFrequency(word, documentTokens);
         double inverseDocumentFrequency = calculateInverseDocumentFrequency(word);

@@ -1,18 +1,16 @@
 package com.findwise.storage;
 
-import com.findwise.Testable;
 import com.findwise.IndexEntry;
+import com.findwise.Testable;
 
-import java.util.List;
 import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 
 public interface IndexEntryStorage extends Testable {
-    void addIndexEntries(String documentId, List<IndexEntry> indexEntry);
+    void addEditIndexEntry(String token, String documentId, double scores);
 
-    Optional<IndexEntry> getIndexEntryById(String documentId, String token);
+    Optional<Set<IndexEntry>> getIndexEntriesByToken(String token);
 
-    void updateIndexEntry(String documentId, IndexEntry updatedIndexEntry);
-
-    Map<String, List<IndexEntry>> getDocumentsWithToken(String token);
+    Map<String, Set<IndexEntry>> getIndexEntriesForTokens(Set<String> token);
 }

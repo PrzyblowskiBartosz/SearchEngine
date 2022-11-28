@@ -8,7 +8,7 @@ import org.junit.Test;
 
 import java.util.*;
 
-public class SearchEngineStorageTest {
+public class DocumentStorageTest {
 
     DocumentStorage storage = DocumentStorageImpl.getInstance();
     Tokenizer tokenizer = TokenizerImpl.getInstance();
@@ -24,7 +24,7 @@ public class SearchEngineStorageTest {
         String documentContent = "the brown fox jumped over the brown dog";
 
         storage.addDocument(documentId, documentContent);
-        Optional<List<String>> result = storage.getDocumentById(documentId);
+        Optional<List<String>> result = storage.getDocumentContentById(documentId);
 
         Assert.assertFalse("Document content should not be empty", result.isEmpty());
         Assert.assertEquals("Document content shouldnt be different!", tokenizer.getTokens(documentContent), result.get());
@@ -38,7 +38,7 @@ public class SearchEngineStorageTest {
 
         storage.addDocument(documentId, documentContent);
         storage.addDocument(documentId, newDocumentContent);
-        Optional<List<String>> result = storage.getDocumentById(documentId);
+        Optional<List<String>> result = storage.getDocumentContentById(documentId);
 
         Assert.assertFalse("Document content should not be empty", result.isEmpty());
         Assert.assertEquals("Document content shouldnt be different!", tokenizer.getTokens(newDocumentContent), result.get());
@@ -50,7 +50,7 @@ public class SearchEngineStorageTest {
         String documentContent = "";
 
         storage.addDocument(documentId, documentContent);
-        Optional<List<String>> result = storage.getDocumentById(documentId);
+        Optional<List<String>> result = storage.getDocumentContentById(documentId);
 
         Assert.assertFalse("Document content should not be empty", result.isEmpty());
         Assert.assertEquals("Document content shouldnt be different!", tokenizer.getTokens(documentContent), result.get());
@@ -62,7 +62,7 @@ public class SearchEngineStorageTest {
         String documentContent = "";
 
         storage.addDocument(documentId, documentContent);
-        Optional<List<String>> result = storage.getDocumentById("document2");
+        Optional<List<String>> result = storage.getDocumentContentById("document2");
 
         Assert.assertTrue("Results should be empty", result.isEmpty());
     }
@@ -71,7 +71,7 @@ public class SearchEngineStorageTest {
     public void should_receive_2_documents_containing_token() {
         prepareStorage();
 
-        Set<String> result = storage.getDocumentIdsWithToken("brown");
+        Set<String> result = storage.getDocumentIdsWithTokens(Collections.singleton("brown"));
 
         Assert.assertEquals("Result set should contains 2 documentIds", 2, result.size());
 
@@ -84,7 +84,7 @@ public class SearchEngineStorageTest {
     public void should_receive_empty_set_for_uknown_token() {
         prepareStorage();
 
-        Set<String> result = storage.getDocumentIdsWithToken("unnownToken");
+        Set<String> result = storage.getDocumentIdsWithTokens(Collections.singleton("unnownToken"));
 
         Assert.assertTrue("Result list should be empty", result.isEmpty());
     }
