@@ -1,5 +1,5 @@
 # SearchEngine
-Simple SearchEngine app witch implement *Inverted Indexes* and *TF-IDF* algorithm.
+SearchEngine app witch implement *Inverted Indexes* and *TF-IDF* algorithm.
 Created for Findwise as interview task.
 
 Jar scan text files in the directory it is in.
