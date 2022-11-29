@@ -31,16 +31,16 @@ public class SearchEngineTest {
 
     @Test
     public void Should_Update_Indexes_Scores_Values_In_Storage() {
-        searchEngine.indexDocument("Document1",  "My name is Bartosz");
-        searchEngine.indexDocument("Document2",  "My car is Honda");
-        searchEngine.indexDocument("Document3",  "The car I drive is Honda Civic");
-        searchEngine.indexDocument("Document4",  "My car is a Civic model by Honda");
+        searchEngine.indexDocument("Document1",  "name Bartosz");
+        searchEngine.indexDocument("Document2",  "car Honda");
+        searchEngine.indexDocument("Document3",  "car drive Honda Civic");
+        searchEngine.indexDocument("Document4",  "car Civic model Honda");
 
         Optional<Set<IndexEntry>> result =  indexEntryStorage.getIndexEntriesByToken("honda");
 
         Assert.assertTrue("Should not be empty", result.isPresent());
         Assert.assertEquals("Should have one size", 3, result.get().size());
-        Assert.assertEquals("Token 'honda', should have different scores", 0.03125, result.get().iterator().next().getScore(), 0.0001);
+        Assert.assertEquals("Token 'honda', should have different scores", 0.03125, result.get().iterator().next().getScore(), 0.001);
     }
 
     @Test
