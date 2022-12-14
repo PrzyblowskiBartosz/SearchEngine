@@ -40,4 +40,9 @@ public class IndexEntryImpl implements IndexEntry {
 
         return false;
     }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(id);
+    }
 }
